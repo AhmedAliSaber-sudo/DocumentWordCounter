@@ -51,10 +51,10 @@ The application generates an Excel file named "Document_Names_and_Word_Counts.xl
 - Multithreading for faster processing
 
 ## Support
-If you encounter any issues or have suggestions for improvements, please open an issue in the GitHub repository or contact the developer.
+If you encounter any issues or have suggestions for improvements, please open an issue in the GitHub repository or contact me.
 
 ## License
-[Specify your chosen license here]
+to be added 
 
 ## Acknowledgments
 This application uses the following open-source libraries:
