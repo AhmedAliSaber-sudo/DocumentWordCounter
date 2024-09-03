@@ -47,7 +47,8 @@ def count_words_in_file(file_path):
         print(f"Error processing {file_path}: {str(e)}. Skipping...")
 
     return None
-def list_docs_and_word_counts(folder_path, status_label):
+
+def list_docs_and_word_counts(folder_path, output_path, status_label):
     wb = Workbook()
     ws = wb.active
     ws.title = "Document Names and Word Counts"
@@ -69,7 +70,6 @@ def list_docs_and_word_counts(folder_path, status_label):
         status_label.config(text=f"Processing: {index}/{total_files}")
         status_label.update()
 
-    output_path = os.path.join(folder_path, "Document_Names_and_Word_Counts.xlsx")
     wb.save(output_path)
     return output_path
 
@@ -78,34 +78,49 @@ class Application(tk.Tk):
     def __init__(self):
         super().__init__()
         self.title("Document Word Counter")
-        self.geometry("400x200")
+        self.geometry("500x300")
 
         self.folder_path = tk.StringVar()
+        self.output_path = tk.StringVar()
 
-        tk.Label(self, text="Select Folder:").pack(pady=10)
+        tk.Label(self, text="Select Input Folder:").pack(pady=(10, 0))
         tk.Entry(self, textvariable=self.folder_path, width=50).pack()
-        tk.Button(self, text="Browse", command=self.browse_folder).pack(pady=5)
+        tk.Button(self, text="Browse Input", command=self.browse_input_folder).pack(pady=(0, 10))
+
+        tk.Label(self, text="Select Output File:").pack(pady=(10, 0))
+        tk.Entry(self, textvariable=self.output_path, width=50).pack()
+        tk.Button(self, text="Browse Output", command=self.browse_output_file).pack(pady=(0, 10))
 
         self.status_label = tk.Label(self, text="")
         self.status_label.pack(pady=10)
 
         tk.Button(self, text="Process Files", command=self.process_files).pack(pady=10)
 
-    def browse_folder(self):
+    def browse_input_folder(self):
         folder_selected = filedialog.askdirectory()
         self.folder_path.set(folder_selected)
 
+    def browse_output_file(self):
+        file_selected = filedialog.asksaveasfilename(defaultextension=".xlsx",
+                                                     filetypes=[("Excel files", "*.xlsx")])
+        self.output_path.set(file_selected)
+
     def process_files(self):
-        folder_path = self.folder_path.get()
-        if not folder_path:
-            messagebox.showerror("Error", "Please select a folder")
+        input_folder = self.folder_path.get()
+        output_file = self.output_path.get()
+
+        if not input_folder:
+            messagebox.showerror("Error", "Please select an input folder")
+            return
+        if not output_file:
+            messagebox.showerror("Error", "Please select an output file")
             return
 
         self.status_label.config(text="Processing...")
         self.update()
 
         try:
-            output_path = list_docs_and_word_counts(folder_path, self.status_label)
+            output_path = list_docs_and_word_counts(input_folder, output_file, self.status_label)
             self.status_label.config(text="Processing complete!")
             messagebox.showinfo("Success", f"Excel file created:\n{output_path}")
         except Exception as e:
