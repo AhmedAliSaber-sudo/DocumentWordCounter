@@ -23,13 +23,13 @@ Document Word Counter is a Windows application that counts words in various docu
 
 ## Usage
 1. Run `DocumentWordCounter.exe`.
-2. Click the "Browse" button to select the folder containing your documents.
-3. Click "Process Files" to start counting words.
-4. Wait for the process to complete. You'll see progress updates in the application window.
-5. Once finished, a message box will show the location of the created Excel file.
+2. Click the "Browse Input" button to select the folder containing your documents.
+3. Click the "Browse Output" button to choose the location and name for the output Excel file.
+4. Click "Process Files" to start counting words.
+5. Wait for the process to complete. You'll see progress updates in the application window.
 
 ## Output
-The application generates an Excel file named "Document_Names_and_Word_Counts.xlsx" in the same folder as the processed documents. This file contains:
+The application generates an Excel file at the location you specified, with the name you chose. This file contains:
 - Document Name
 - Word Count
 - Date Modified
